@@ -167,10 +167,34 @@
     document.getElementById("t1_23").style.backgroundColor = "red";
     
     //document.getElementById("calendar").innerHTML = "<table>"
-    
+           var selectedID = "";
+        var saved_color = "#000000"; 
     $(document).ready(function(){
-       
+
+
+        $(".td_class").click(function(){
+
+
+            var thisBackground = $(this).css("background-color");
+            
+            if ( thisBackground == "rgb(204,204,204)") {
+                $(this).css("background-color","white")
+            }
+            else $(this).css("background-color","#cccccc");
+            
+            if ( selectedID != "" && selectedID!= this.id) {
+                document.getElementById(selectedID).style.backgroundColor = "white";
+            }
+            
+ 
+            
+            selectedID = this.id;        
+            var number = this.id.split("_")[1];
+           
+
+            $("#demo3").html(number);
         
+       });
     });
 
 </script>

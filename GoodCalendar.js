@@ -190,9 +190,9 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
                         }    
                     }
                     if ( j==0 && showWeek ) {S+= "<td class=\"week " + styles.td +"\">"+i+"</td>"; }
-                    else if ( j == comp1 ) {S+= "<td class=\"weekend " + styles.td +"\" id=\""+styles.unique_id+"_"+dayCount+"\" "+styles.extraDayData+">" + dayCount + "</td>";}
-                    else if ( j == comp2 ) {S+= "<td class=\"weekend "+ styles.td +"\"  id=\""+styles.unique_id+"_"+dayCount+"\" "+styles.extraDayData+">" + dayCount + "</td>";}
-		    else {S+= "<td class=\"" + styles.td +"\" id=\""+styles.unique_id+"_"+dayCount+ "\" "+styles.extraDayData+">" + dayCount + "</td>";}
+                    else if ( j == comp1 ) {S+= "<td class=\"weekend " + styles.td +"\" id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"\" "+styles.extraDayData+">" + dayCount + "</td>";}
+                    else if ( j == comp2 ) {S+= "<td class=\"weekend "+ styles.td +"\"  id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"\" "+styles.extraDayData+">" + dayCount + "</td>";}
+		    else {S+= "<td class=\"" + styles.td +"\" id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+ "\" "+styles.extraDayData+">" + dayCount + "</td>";}
                 }
                 S+= "</tr>";
             }
@@ -222,6 +222,8 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
 	    }
 	}	
     }
+    
+    
     
     return this;
 };
