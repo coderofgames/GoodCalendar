@@ -192,9 +192,9 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
                         }    
                     }
                     if ( j==0 && showWeek ) {S+= "<td class=\"week " + styles.td +"\">"+i+"</td>"; }
-                    else if ( j == comp1 ) {S+= "<td class=\"weekend " + styles.td +"\"><div class=\""+styles.calDiv+"\" id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"_"+month+"\" "+styles.extraDayData+">" + dayCount + "</td>";}
-                    else if ( j == comp2 ) {S+= "<td class=\"weekend "+ styles.td +"\"><div class=\""+styles.calDiv+"\"  id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"_"+month+"\" "+styles.extraDayData+">" + dayCount + "</td>";}
-		    else {S+= "<td class=\"" + styles.td +"\"><div class=\""+styles.calDiv+"\" id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"_"+month+ "\" "+styles.extraDayData+">" + dayCount + "</td>";}
+                    else if ( j == comp1 ) {S+= "<td class=\"weekend " + styles.td +"\"><div class=\""+styles.calDiv+"\" id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"_"+month+"\" "+styles.extraDayData+">" + dayCount + "</div></td>";}
+                    else if ( j == comp2 ) {S+= "<td class=\"weekend "+ styles.td +"\"><div class=\""+styles.calDiv+"\"  id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"_"+month+"\" "+styles.extraDayData+">" + dayCount + "</div></td>";}
+		    else {S+= "<td class=\"" + styles.td +"\"><div class=\""+styles.calDiv+"\" id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"_"+month+ "\" "+styles.extraDayData+">" + dayCount + "</div></td>";}
                 }
                 S+= "</tr>";
             }
