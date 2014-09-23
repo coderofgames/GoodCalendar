@@ -6,9 +6,8 @@
     
     for( day in days){
         daysShort[day] = days[day].substring(0,3);
-        if ( day == 0) {
-            daysShortMondayFirst[days.length-1] = days[day].substring(0,3);
-        } else daysShortMondayFirst[day-1] = days[day].substring(0,3);
+        if ( day == 0) daysShortMondayFirst[days.length-1] = days[day].substring(0,3);
+        else daysShortMondayFirst[day-1] = days[day].substring(0,3);
     }
     
     var months = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -188,9 +187,9 @@
                         }    
                     }
                     if ( j==0 && showWeek ) {S+= "<td class=\"week " + styles.td +"\">"+i+"</td>"; }
-                    else if ( j == comp1 ) {S+= "<td class=\"weekend " + styles.td +"\"><div class=\""+styles.calDiv+ "\" id=\"d_"+styles.unique_id+dayCount+ "\">" + dayCount + "</div></td>";}
-                    else if ( j == comp2 ) {S+= "<td class=\"weekend " + styles.td +"\"><div class=\""+styles.calDiv+ "\" id=\"d_"+styles.unique_id+dayCount+ "\">" + dayCount + "</div></td>";}
-                    else {S+= "<td class=\"" + styles.td +"\"><div class=\""+styles.calDiv+ "\" id=\"d_"+styles.unique_id+dayCount+ "\">" + dayCount + "</div></td>";}
+                    else if ( j == comp1 ) {S+= "<td class=\"weekend " + styles.td +"\"><div class=\""+styles.calDiv+ "\" id=\""+styles.unique_id+"_"+dayCount+ "\">" + dayCount + "</div></td>";}
+                    else if ( j == comp2 ) {S+= "<td class=\"weekend " + styles.td +"\"><div class=\""+styles.calDiv+ "\" id=\""+styles.unique_id+"_"+dayCount+ "\">" + dayCount + "</div></td>";}
+                    else {S+= "<td class=\"" + styles.td +"\"><div class=\""+styles.calDiv+ "\" id=\""+styles.unique_id+"_"+dayCount+ "\">" + dayCount + "</div></td>";}
                 }
                 S+= "</tr>";
             }

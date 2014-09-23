@@ -83,7 +83,7 @@
     
     .title
     {
-        font-size:16;
+        font-size: large;
         font-style: normal;
         text-align: center;
     }
@@ -128,7 +128,9 @@
                                                            calDiv: "calDiv_class zoomTarget",
                                                            extraDayData: ""});//daysShort.valueOf();
     
-    document.getElementById("demo2").innerHTML = buildTable(new Date(),
+    var d = new Date();
+    
+    document.getElementById("demo2").innerHTML = buildTable(d,
                                                             true,true,
                                                             { unique_id: "t2",
                                                               title:"title_style",
@@ -145,7 +147,7 @@
                                                               calDiv: "calDiv_class zoomTarget",
                                                               extraDayData: " "}); //daysShort.valueOf();
     
-    var d = new Date();
+
     //document.getElementById("title_date").innerHTML = d.getMonth() + " " + d.getFullYear();
     
     var events = [1,0,0,4,5,9,9,0,0,3,2,0,0,1,1,4,5,4,,0,0,0,0,6,0,0,7,8,0,1,1,1,0,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,2,2,2,2,1,1,1,1,0];
@@ -153,12 +155,12 @@
     
     var myNumber = 128;
     for( var i = 1; i < setEventsLoopCount+1; i++){
-        var str = "d_t2"+i.toString(10);
+        var str = "t2_"+i.toString(10);
         if ( events[i]!=0) {
             document.getElementById(str).style.backgroundColor = "red";
         }
     }
-    document.getElementById("d_t123").style.backgroundColor = "red";
+    document.getElementById("t1_23").style.backgroundColor = "red";
     
     //document.getElementById("calendar").innerHTML = "<table>"
 
