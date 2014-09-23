@@ -1,8 +1,12 @@
 var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
     
-    var date = _date;
-    var showWeek = _showWeek;
+    var date = _date; 
+    var showWeek = _showWeek;  
     var sundayFirst = _sundayFirst;
+    
+    if (date==null) {date = new Date();}
+    if (showWeek==null) {showWeek = false;}
+    if ( sundayFirst == null) {sundayFirst = false;}       
     
     function STYLES(styles_T) {
 	this.unique_id= "calendar";
@@ -105,11 +109,7 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
     
   
     this.Create = function(){
-
-        if (date==null) {date = new Date();}
-        if (showWeek==null) {showWeek = false;}
-        if ( sundayFirst == null) {sundayFirst = false;}
-        
+    
         var today = date.getDay();
         if ( !sundayFirst ) {
             if ( today == 0)today = 6;
@@ -230,6 +230,7 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
     this.getDayStr = function(){ return this.days[getDay()];}
     this.getDayOfTheMonth = function(){return date.getDate();}
     this.getMonth = function(){return date.getMonth();}
+    this.getMonthStr = function(){return months[date.getMonth()];}
     this.getYear = function(){return date.getYear();}
     
     
