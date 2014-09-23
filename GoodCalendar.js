@@ -1,47 +1,76 @@
-   var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
     
-    var daysShort = [];//["Sun","Mon","Tue","Wed","Thur","Fri","Sat"];
+    var date = _date;
+    var showWeek = _showWeek;
+    var sundayFirst = _sundayFirst;
     
-    var daysShortMondayFirst = [];//["Sun","Mon","Tue","Wed","Thur","Fri","Sat"];
+    function STYLES(styles_T) {
+	this.unique_id= "calendar";
+	this.title ="title_style";
+	this.table= "cal_table";
+	this.thead= "thead_class";
+	this.th= "th_class";
+	this.thr= "thr_class";
+	this.thd= "thd_class";
+	this.button= "button_style";
+	this.extraButtonData= " ";
+	this.tbody= "tbody_class";
+	this.tr= "tr_class";
+	this.td= "td_class";
+	this.calDiv= "calDiv_class";
+	this.extraDayData= " ";
+	
+	 for (x in styles_T) {
+	    this[x] = styles_T[x];
+	}           
+    };        
     
-    for( day in days){
-        daysShort[day] = days[day].substring(0,3);
-        if ( day == 0) daysShortMondayFirst[days.length-1] = days[day].substring(0,3);
-        else daysShortMondayFirst[day-1] = days[day].substring(0,3);
-    }
+    var styles = new STYLES(_styles);    
     
-    var months = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    var monthsShort = [];
-    
-    
-    for( var i = 0; i < months.length; i++)
-    {
-        monthsShort[i] = months[i].substring(0,3);
-       
-    }
-    
-   var daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
+    var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+     
+     var daysShort = [];//["Sun","Mon","Tue","Wed","Thur","Fri","Sat"];
+     
+     var daysShortMondayFirst = [];//["Sun","Mon","Tue","Wed","Thur","Fri","Sat"];
+     
+     for( day in days){
+	 daysShort[day] = days[day].substring(0,3);
+	 if ( day == 0) daysShortMondayFirst[days.length-1] = days[day].substring(0,3);
+	 else daysShortMondayFirst[day-1] = days[day].substring(0,3);
+     }
+     
+     var months = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+     var monthsShort = [];
+     
+     
+     for( var i = 0; i < months.length; i++)
+     {
+	 monthsShort[i] = months[i].substring(0,3);
 
-   /* Taken from the following resource
-    <!--   HTML coding exclusively with the CoffeeCup HTML 2010 Editor --> 
-    <!--          http://www.coffeecup.com                             --> 
-    <!--   First online in September 1977 as part of the ARPAnet group --> 
-    <!--   Brewed on December 6 1994 1:09:21 PM                        --> 
-    <!--   Updated on September 6 2001 4:18:12 AM                      --> 
-    <!--   Last updated on November 28 2010 8:22:45 PM                 --> 
-    <!--   Created by Dr. Gene Davis - Computer Support Group          --> 
-    */   
-    function IsLeapYear(Year){
-	if(Math.round(Year/4) == Year/4){
-		if(Math.round(Year/100) == Year/100){
-			if(Math.round(Year/400) == Year/400)
-				return true;
-			else return false;
-		}else return true;
-	}
-	return false;
-    }
-   
+     }
+     
+    var daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
+ 
+    /* Taken from the following resource
+     <!--   HTML coding exclusively with the CoffeeCup HTML 2010 Editor --> 
+     <!--          http://www.coffeecup.com                             --> 
+     <!--   First online in September 1977 as part of the ARPAnet group --> 
+     <!--   Brewed on December 6 1994 1:09:21 PM                        --> 
+     <!--   Updated on September 6 2001 4:18:12 AM                      --> 
+     <!--   Last updated on November 28 2010 8:22:45 PM                 --> 
+     <!--   Created by Dr. Gene Davis - Computer Support Group          --> 
+     */   
+     function IsLeapYear(Year){
+	 if(Math.round(Year/4) == Year/4){
+		 if(Math.round(Year/100) == Year/100){
+			 if(Math.round(Year/400) == Year/400)
+				 return true;
+			 else return false;
+		 }else return true;
+	 }
+	 return false;
+     }
+	 
     function buildTableHeader(month, year, b_showWeek, sundayFirst, styles){
         var S = "<thead class=\""+ styles.thead +"\">"+
                 "<tr class=\""+ styles.thr+"\">"+
@@ -50,7 +79,7 @@
                 "<tr class=\""+ styles.thr+"\">"+
                     "<td class=\"" +styles.button+ " " + styles.thd + "\">«</td>"+
                     "<td class=\"" +styles.button+ " " + styles.thd + "\">‹</td>"+
-                    "<td class=\"" +styles.button+ " " + styles.thd + "\" colspan=\""+(b_showWeek ? 4:3)+"\">Today</td>"+
+                    "<td class=\"" +styles.button+ " " + styles.thd + "\" colspan=\""+(b_showWeek ? 4:3)+"\">"+days[date.getDay()]+" "+date.getDate()+"</td>"+
                     "<td class=\"" +styles.button+ " " + styles.thd + "\">›</td>"+
                     "<td class=\"" +styles.button+ " " + styles.thd + "\">»</td>"+
                 "</tr>";
@@ -62,7 +91,7 @@
 
         for ( var i = 0; i < 7; i++) {
             if ( i==0 || i== 6) {
-                S += "<th class=\"weekend " + styles.th + "\">"+ (sundayFirst?daysShort[i]:daysShortMondayFirst[i]) +"</th>";
+                S += "<th class=\"" + styles.th + "\">"+ (sundayFirst?daysShort[i]:daysShortMondayFirst[i]) +"</th>";
             } else {
                 S+= "<th class=\"" + styles.th + "\">"+ (sundayFirst?daysShort[i]:daysShortMondayFirst[i])+"</th>";
             }
@@ -73,35 +102,12 @@
     }
     
   
-    function buildTable(date, showWeek, sundayFirst, _styles){
+    this.Create = function(){
 
         if (date==null) {date = new Date();}
         if (showWeek==null) {showWeek = false;}
         if ( sundayFirst == null) {sundayFirst = false;}
         
-        function STYLES(styles_T) {
-            this.unique_id= "calendar";
-            this.title ="title_style";
-            this.table= "cal_table";
-            this.thead= "thead_class";
-            this.th= "th_class";
-            this.thr= "thr_class";
-            this.thd= "thd_class";
-            this.button= "button_style";
-            this.extraButtonData= " ";
-            this.tbody= "tbody_class";
-            this.tr= "tr_class";
-            this.td= "td_class";
-            this.calDiv= "calDiv_class";
-            this.extraDayData= " ";
-            
-             for (x in styles_T) {
-                this[x] = styles_T[x];
-            }           
-        };        
-        
-        var styles = new STYLES(_styles);
-
         var today = date.getDay();
         if ( !sundayFirst ) {
             if ( today == 0)today = 6;
@@ -140,7 +146,7 @@
             if(firstOfTheMonthDay==0)firstOfTheMonthDay=6;
             else firstOfTheMonthDay -= 1;
         }
-        //document.getElementById("demo3").innerHTML = daysInLastMonth;//daysShort[today];  
+
         var S = "<table class=\"" + styles.table + "\" id=\""+styles.unique_id+"\">";
         
             S += buildTableHeader(month, year, showWeek, sundayFirst, styles);
@@ -160,18 +166,12 @@
                             if (j == firstOfTheMonthDay) {
                                 setFirstDay = true;
                                 dayCount = 0;
-                            }else{
-                                dayCount = daysInLastMonth - (firstOfTheMonthDay) + j +1;
-                            }
+                            } else{ dayCount = daysInLastMonth - (firstOfTheMonthDay) + j +1; }
                         } else {
                             if (j-1 == firstOfTheMonthDay) {
                                 setFirstDay = true;
                                 dayCount = 0;
-                            }else {
-                                if (j!=0) {
-                                    dayCount = daysInLastMonth - (firstOfTheMonthDay) + j; 
-                                }
-                            }
+                            } else { if (j!=0) { dayCount = daysInLastMonth - (firstOfTheMonthDay) + j; }}
                         }
                     }
                     if (setFirstDay) {
@@ -187,9 +187,9 @@
                         }    
                     }
                     if ( j==0 && showWeek ) {S+= "<td class=\"week " + styles.td +"\">"+i+"</td>"; }
-                    else if ( j == comp1 ) {S+= "<td class=\"weekend " + styles.td +"\"><div class=\""+styles.calDiv+ "\" id=\""+styles.unique_id+"_"+dayCount+ "\">" + dayCount + "</div></td>";}
-                    else if ( j == comp2 ) {S+= "<td class=\"weekend " + styles.td +"\"><div class=\""+styles.calDiv+ "\" id=\""+styles.unique_id+"_"+dayCount+ "\">" + dayCount + "</div></td>";}
-                    else {S+= "<td class=\"" + styles.td +"\"><div class=\""+styles.calDiv+ "\" id=\""+styles.unique_id+"_"+dayCount+ "\">" + dayCount + "</div></td>";}
+                    else if ( j == comp1 ) {S+= "<td class=\"weekend " + styles.td +"\" id=\""+styles.unique_id+"_"+dayCount+"\" "+styles.extraDayData+">" + dayCount + "</td>";}
+                    else if ( j == comp2 ) {S+= "<td class=\"weekend " + styles.td +"\"  id=\""+styles.unique_id+"_"+dayCount+"\" "+styles.extraDayData+">" + dayCount + "</td>";}
+                    else {S+= "<td class=\"" + styles.td +"\" id=\""+styles.unique_id+"_"+dayCount+ "\" "+styles.extraDayData+">" + dayCount + "</td>";}
                 }
                 S+= "</tr>";
             }
@@ -198,3 +198,27 @@
         
         return S;
     }
+    
+    this.setIndividualDayStyles = function(events, _event_elements)
+    {
+	var event_elements;
+	if ( _event_elements == null) {
+	    event_elements = function(str){
+		return "document.getElementById(str).style.backgroundColor = \"red\";";
+	    }
+	}else {
+	    event_elements = _event_elements;
+	}
+	var setEventsLoopCount = daysInMonth[date.getMonth()];
+    
+	var myNumber = 128;
+	for( var i = 1; i < setEventsLoopCount+1; i++){
+	    var str = styles.unique_id +"_"+i.toString(10);
+            if ( events[i]!=0) {
+		eval(event_elements(str));
+	    }
+	}	
+    }
+    
+    return this;
+};

@@ -13,8 +13,8 @@
 <style>
     .calendar
     {
-        width:100%;
-        height:100%;
+        width:100px;
+        height:100px;
     }
 
     
@@ -23,20 +23,14 @@
         border:3px solid black;
     }
     
-    tr td 
+    .td_class 
     {
         width:100px;
         height:100px;
-        border:3px solid black;
+        border:1px solid black;
     }
     
-    th
-    {
-        width:100px;
-        height:100px;
-        border:3px solid black;
-        background-color: lightblue;
-    }
+
     
     .c1
     {
@@ -51,6 +45,7 @@
                 width:100%;
         height:100%;
         border-collapse: collapse;
+        
     }
     
     .thead_class
@@ -61,11 +56,15 @@
     .th_class
     {
         background-color: orange;
+        border:1px solid black;
     }
     
-    .thr_class
+    .thr_class .thd_class
     {
-        background-color: lightblue;
+         width:100px;
+        height:100px;       
+        background-color: #0099FF;
+        border:1px solid black;
     }
     
     .tbody_class
@@ -87,6 +86,13 @@
         font-style: normal;
         text-align: center;
     }
+    
+    .weekend
+    {
+        background-color: lightblue;
+    }
+    
+    
  
                                                            /* { table: "table_class",
                                                            thead: "thead_class",
@@ -111,7 +117,7 @@
 <script>
  
 
-    document.getElementById("demo").innerHTML = buildTable(new Date(2012, 1, 15),//new Date();
+    document.getElementById("demo").innerHTML = new Calendar(new Date(2012, 1, 15),//new Date();
                                                            false,false,
                                                            { unique_id: "t1",
                                                              title:"title_style",
@@ -124,13 +130,13 @@
                                                            extraButtonData: " ",
                                                            tbody: "tbody_class",
                                                            tr: "tr_class",
-                                                           td: "td_class",
-                                                           calDiv: "calDiv_class zoomTarget",
-                                                           extraDayData: ""});//daysShort.valueOf();
+                                                           td: "td_class zoomTarget",
+                                                           calDiv: "calDiv_class",
+                                                           extraDayData: ""}).Create();//daysShort.valueOf();
     
     var d = new Date();
     
-    document.getElementById("demo2").innerHTML = buildTable(d,
+    var myCal =                                       new Calendar(d,
                                                             true,true,
                                                             { unique_id: "t2",
                                                               title:"title_style",
@@ -143,26 +149,27 @@
                                                               extraButtonData: " ",
                                                               tbody: "tbody_class",
                                                               tr: "tr_class",
-                                                              td: "td_class",
-                                                              calDiv: "calDiv_class zoomTarget",
-                                                              extraDayData: " "}); //daysShort.valueOf();
+                                                              td: "td_class zoomTarget",
+                                                              calDiv: "calDiv_class",
+                                                              extraDayData: "data-targetsize=\"1.0\" data-scalemode=\"both\" data-closeclick=\"true\""});
+                                                         //daysShort.valueOf();
+     
+     document.getElementById("demo2").innerHTML = myCal.Create();
     
 
     //document.getElementById("title_date").innerHTML = d.getMonth() + " " + d.getFullYear();
     
     var events = [1,0,0,4,5,9,9,0,0,3,2,0,0,1,1,4,5,4,,0,0,0,0,6,0,0,7,8,0,1,1,1,0,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,2,2,2,2,1,1,1,1,0];
-    var setEventsLoopCount = daysInMonth[d.getMonth()];
-    
-    var myNumber = 128;
-    for( var i = 1; i < setEventsLoopCount+1; i++){
-        var str = "t2_"+i.toString(10);
-        if ( events[i]!=0) {
-            document.getElementById(str).style.backgroundColor = "red";
-        }
-    }
+
+    myCal.setIndividualDayStyles(events);
     document.getElementById("t1_23").style.backgroundColor = "red";
     
     //document.getElementById("calendar").innerHTML = "<table>"
+    
+    $(document).ready(function(){
+       
+        
+    });
 
 </script>
 
