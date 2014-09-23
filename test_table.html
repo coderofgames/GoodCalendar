@@ -55,6 +55,8 @@
     
     .th_class
     {
+         width:100px;
+        height:100px;         
         background-color: orange;
         border:1px solid black;
     }
@@ -74,9 +76,9 @@
     
     .calDiv_class
     {
-        height: 95%;
+        height: inherit;
         width: auto;
-        margin:1px;      
+        margin:1px;     
         /*border:2px solid blue;*/
     }
     
@@ -90,6 +92,20 @@
     .weekend
     {
         background-color: lightblue;
+    }
+    
+    .day_title_class
+    {
+        font-size: large;
+        font-style: normal;        
+        text-align: center;
+    }
+    
+    .button_style
+    {
+        font-size: large;
+        font-style: normal;        
+        text-align: center;
     }
     
     
@@ -111,7 +127,7 @@
 
 
 <div id="demo" class="c1 zoomViewport"></div>
-<div id="demo2"></div>
+<div id="demo2" class="c1 zoomViewport"></div>
 <div id="demo3"></div>
 
 <script>
@@ -147,11 +163,12 @@
                                                               thd: "thd_class",
                                                               button: "button_style",
                                                               extraButtonData: " ",
+                                                              dayTitle: "day_title_class",
                                                               tbody: "tbody_class",
                                                               tr: "tr_class",
-                                                              td: "td_class zoomTarget",
-                                                              calDiv: "calDiv_class",
-                                                              extraDayData: "data-targetsize=\"1.0\" data-scalemode=\"both\" data-closeclick=\"true\""});
+                                                              td: "td_class",
+                                                              calDiv: "calDiv_class zoomTarget",
+                                                              extraDayData: "data-targetsize=\"0.95\" data-scalemode=\"width\" data-closeclick=\"true\""});
                                                          //daysShort.valueOf();
      
      document.getElementById("demo2").innerHTML = myCal.Create();
@@ -164,31 +181,42 @@
     myCal.setIndividualDayStyles(events, function(id){
 		document.getElementById(id).style.backgroundColor = "red";
     });
-    document.getElementById("t1_23").style.backgroundColor = "red";
+    document.getElementById("t1_23_1").style.backgroundColor = "red"; //tableid_dayInMonth_monthIndex, so for the first table, t1_23_1 for 23rd feb
     
     //document.getElementById("calendar").innerHTML = "<table>"
-           var selectedID = "";
-        var saved_color = "#000000"; 
+    var todayElemt2 = "t2_" + myCal.getDay() +"_"+myCal.getMonth();
+           var selectedID = todayElemt2;
+        var saved_color = "white";
+        
+    
+    
     $(document).ready(function(){
 
+        saved_color = document.getElementById(todayElemt2).style.backgroundColor;
+        document.getElementById(todayElemt2).style.backgroundColor = "#cccccc";
 
-        $(".td_class").click(function(){
+        $(".calDiv_class").click(function(){
+
 
 
             var thisBackground = $(this).css("background-color");
             
-            if ( thisBackground == "rgb(204,204,204)") {
-                $(this).css("background-color","white")
-            }
-            else $(this).css("background-color","#cccccc");
-            
-            if ( selectedID != "" && selectedID!= this.id) {
-                document.getElementById(selectedID).style.backgroundColor = "white";
-            }
-            
  
             
-            selectedID = this.id;        
+            if ( selectedID != "" && selectedID!= this.id) {
+                
+
+                document.getElementById(selectedID).style.backgroundColor = saved_color;
+
+                saved_color = thisBackground;
+                $(this).css("background-color","#cccccc");
+            }
+
+            
+
+            
+            selectedID = this.id;
+             
             var number = this.id.split("_")[1];
            
 

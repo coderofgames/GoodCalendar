@@ -14,6 +14,8 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
 	this.thd= "thd_class";
 	this.button= "button_style";
 	this.extraButtonData= " ";
+	this.button_content = { back_month: "<<", back_day: "<", forward_month:">", forward_day:">>"};
+	this.dayTitle = "day_title_class",
 	this.tbody= "tbody_class";
 	this.tr= "tr_class";
 	this.td= "td_class";
@@ -25,7 +27,7 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
 	}           
     };        
     
-    var styles = new STYLES(_styles);    
+    var styles = new STYLES(_styles);
     
     var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
      
@@ -77,11 +79,11 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
                     "<td id = \"title_date\" class=\"title " + styles.thd + "\" colspan=\""+(b_showWeek ? 8:7)+"\"><h1 class=\""+styles.title+"\">"+monthsShort[month]+" "+year+"</h1></td>"+
                 " </tr>"+
                 "<tr class=\""+ styles.thr+"\">"+
-                    "<td class=\"" +styles.button+ " " + styles.thd + "\">«</td>"+
-                    "<td class=\"" +styles.button+ " " + styles.thd + "\">‹</td>"+
-                    "<td class=\"" +styles.button+ " " + styles.thd + "\" colspan=\""+(b_showWeek ? 4:3)+"\">"+days[date.getDay()]+" "+date.getDate()+"</td>"+
-                    "<td class=\"" +styles.button+ " " + styles.thd + "\">›</td>"+
-                    "<td class=\"" +styles.button+ " " + styles.thd + "\">»</td>"+
+                    "<td class=\"" +styles.button+ " " + styles.thd + "\">"+styles.button_content.back_month+"</td>"+
+                    "<td class=\"" +styles.button+ " " + styles.thd + "\">"+styles.button_content.back_month+"</td>"+
+                    "<td class=\"" +styles.button+ " " + styles.thd + " " + styles.dayTitle + "\" colspan=\""+(b_showWeek ? 4:3)+"\">"+days[date.getDay()]+" "+date.getDate()+"</td>"+
+                    "<td class=\"" +styles.button+ " " + styles.thd + "\">"+styles.button_content.forward_day+"</td>"+
+                    "<td class=\"" +styles.button+ " " + styles.thd + "\">"+styles.button_content.forward_month+"</td>"+
                 "</tr>";
             S += "<tr class=\""+ styles.thr+"\">";
         
@@ -190,9 +192,9 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
                         }    
                     }
                     if ( j==0 && showWeek ) {S+= "<td class=\"week " + styles.td +"\">"+i+"</td>"; }
-                    else if ( j == comp1 ) {S+= "<td class=\"weekend " + styles.td +"\" id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"\" "+styles.extraDayData+">" + dayCount + "</td>";}
-                    else if ( j == comp2 ) {S+= "<td class=\"weekend "+ styles.td +"\"  id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"\" "+styles.extraDayData+">" + dayCount + "</td>";}
-		    else {S+= "<td class=\"" + styles.td +"\" id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+ "\" "+styles.extraDayData+">" + dayCount + "</td>";}
+                    else if ( j == comp1 ) {S+= "<td class=\"weekend " + styles.td +"\"><div class=\""+styles.calDiv+"\" id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"_"+month+"\" "+styles.extraDayData+">" + dayCount + "</td>";}
+                    else if ( j == comp2 ) {S+= "<td class=\"weekend "+ styles.td +"\"><div class=\""+styles.calDiv+"\"  id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"_"+month+"\" "+styles.extraDayData+">" + dayCount + "</td>";}
+		    else {S+= "<td class=\"" + styles.td +"\"><div class=\""+styles.calDiv+"\" id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"_"+month+ "\" "+styles.extraDayData+">" + dayCount + "</td>";}
                 }
                 S+= "</tr>";
             }
@@ -216,12 +218,19 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
     
 	var myNumber = 128;
 	for( var i = 1; i < setEventsLoopCount+1; i++){
-	    var str = styles.unique_id +"_"+i.toString(10);
+	    var str = styles.unique_id +"_"+i.toString(10)+"_"+date.getMonth();
             if ( events[i]!=0) {
 		eval(event_elements(str));
 	    }
 	}	
     }
+    
+    this.getDate = function() {return date;}
+    this.getDay = function() {return date.getDay();}
+    this.getDayStr = function(){ return this.days[getDay()];}
+    this.getDayOfTheMonth = function(){return date.getDate();}
+    this.getMonth = function(){return date.getMonth();}
+    this.getYear = function(){return date.getYear();}
     
     
     
