@@ -155,6 +155,9 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
             var loopWeek = showWeek ? 8: 7;
             var comp1 = showWeek ? 1: 0;
             var comp2 = showWeek ? 7: 6;
+	    if ( !sundayFirst) {
+		comp1 = comp2-1;
+	    }
             var beginningOfNextMonthReset = false;
             var dayCount = 0; 
             var setFirstDay = false;
@@ -188,8 +191,8 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
                     }
                     if ( j==0 && showWeek ) {S+= "<td class=\"week " + styles.td +"\">"+i+"</td>"; }
                     else if ( j == comp1 ) {S+= "<td class=\"weekend " + styles.td +"\" id=\""+styles.unique_id+"_"+dayCount+"\" "+styles.extraDayData+">" + dayCount + "</td>";}
-                    else if ( j == comp2 ) {S+= "<td class=\"weekend " + styles.td +"\"  id=\""+styles.unique_id+"_"+dayCount+"\" "+styles.extraDayData+">" + dayCount + "</td>";}
-                    else {S+= "<td class=\"" + styles.td +"\" id=\""+styles.unique_id+"_"+dayCount+ "\" "+styles.extraDayData+">" + dayCount + "</td>";}
+                    else if ( j == comp2 ) {S+= "<td class=\"weekend "+ styles.td +"\"  id=\""+styles.unique_id+"_"+dayCount+"\" "+styles.extraDayData+">" + dayCount + "</td>";}
+		    else {S+= "<td class=\"" + styles.td +"\" id=\""+styles.unique_id+"_"+dayCount+ "\" "+styles.extraDayData+">" + dayCount + "</td>";}
                 }
                 S+= "</tr>";
             }
