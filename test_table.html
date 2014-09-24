@@ -21,9 +21,9 @@
     
     .td_class 
     {
-        width:auto;
+        width:6em;
         height:6em;
-        border:1px solid black;
+        border:3px solid black;
     }
     
 
@@ -43,7 +43,7 @@
     
     .table_class
     {
-        border:1px solid black;
+        border:3px solid black;
         background-color: lightgrey;
                 width:100%;
         height:100%;
@@ -58,31 +58,32 @@
     
     .th_class
     {
-         width:100px;
-        height:100px;         
+        width:6em;
+        height:6em;      
         background-color: orange;
-        border:1px solid black;
+        border:2px solid black;
     }
     
     .thr_class .thd_class
     {
-         width:100px;
-        height:100px;       
+        width:6em;
+        height:6em;      
         background-color: #0099FF;
-        border:1px solid black;
+        border:2px solid black;
     }
   
     
     .tbody_class
     {
-        background-color: white;
+        background-color: lightgrey;
     }
     
     .calDiv_class
     {
         height: inherit;
         width: auto;
-        margin:2px;     
+        margin:2px;
+        background-color: white;
         /*border:2px solid blue;*/
     }
     
@@ -131,7 +132,13 @@
         height: 1em;
     }    
     
-    
+      .item3
+    {
+        position: absolute;
+       /* top: 0; bottom: 0; right: 0; left: 0; /*fill parent*/
+        background-color: white;
+
+    }      
  
                                                            /* { table: "table_class",
                                                            thead: "thead_class",
@@ -199,7 +206,15 @@
                 newnode2.setAttribute("data-closeclick", "true");
                 newnode2.classList.add("zoomTarget");
                 
-                this_elem.appendChild(newnode2);               
+              var newnode3 = document.createElement("div");
+               newnode3.classList.add("item3");
+                newnode3.setAttribute("id", "content");
+                
+                newnode2.appendChild(newnode3);
+                
+                this_elem.appendChild(newnode2);
+                
+  
     });
 
     var todayElemt2 = "t2_" + myCal.getDayOfTheMonth() +"_"+myCal.getMonth();
@@ -216,10 +231,23 @@
         document.getElementById(todayElemt2).style.backgroundColor = "#cccccc";
 
         
-        /*$(".item2").click(function(evt) {
-            $(this).zoomTo({targetsize:"0.95", scalemode:"both", closeclick:"true"});
-            evt.stopPropagation();
-        });*/
+        $(".item2").click(function(evt) {
+            //var xx = document.getElementById("content");//
+            $(this).children("div").css({"-ms-transform": "scale(0.02,0.02)", /* IE 9 */"-webkit-transform": "scale(0.02,0.02)", /* Chrome, Safari, Opera */ "transform": "scale(0.02,0.02)"});
+            $(this).children("div").load("test_page.html");
+            //$("#content").load("test_page.html");
+          //  $("#content").css()
+       /* evt.preventDefault();
+        var url = "test_page.html";//$(this).attr('href'); //get the link you want to load data from
+        $.ajax({ 
+         type: 'GET',
+         url: url,
+         success: function(data) { 
+            $("#content").html(data); 
+        } 
+       });     */        
+            //evt.stopPropagation();
+        });
     
         $(".calDiv_class").click(function(){
 
@@ -233,15 +261,89 @@
                 document.getElementById(selectedID).style.backgroundColor = saved_color;
 
                 saved_color = thisBackground;
-                $(this).css("background-color","#cccccc");
+                $(this).css("background-color","#ccccFF");
             }
 
             selectedID = this.id;
 
             $("#demo3").html(myCal.getDateFromID(selectedID).toString());
+            
+            myCal.setTitleDateByID(selectedID);
+            
+            
         
        });
+        
+        $("#back_month").click(function(){
+
+            var thisMonth = myCal.getMonth();
+            
+            if ( thisMonth == 0) {
+                thisMonth = 11;
+            }else thisMonth -= 1;
+        
+            var newDate = new Date(myCal.getYear(), thisMonth, 1);
+            
+            myCal.setDate(newDate);
+            
+            
+            //$.unbind("click", zoomTarget());// [, handler ] ))
+            
+            document.getElementById("demo2").innerHTML = "";
+            
+            
+  
+            document.getElementById("demo2").innerHTML = myCal.Create();
+            
+            
+            var events2 = [1,0,0,4,5,8,0,1,1,1,0,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,2,2,2,2,1,1,1,1,0,0,1,0,1,0,0,1,1,0,1,0,1,0,0,1,1];
+    
+            myCal.setIndividualDayStyles(events2, function(id){
+                    //document.getElementById(id).style.backgroundColor = "red";
+                    
+                    var this_elem = document.getElementById(id);
+                    
+                    // insert some nodes
+                    var newnode = document.createElement("div");
+                    newnode.classList.add("item");
+                    newnode.classList.add("zoomTarget");
+                    newnode.setAttribute("data-closeclick", "true");
+                    
+                    this_elem.appendChild(newnode);
+                    
+                    var newnode2 = document.createElement("div");
+                    newnode2.classList.add("item2");
+                    newnode2.setAttribute("data-closeclick", "true");
+                    newnode2.classList.add("zoomTarget");
+                    
+                    this_elem.appendChild(newnode2);               
+            });
+
+            
+       });        
     });
+    
+    /*function showMenuToggle() {
+  	
+	var menu = function(){ 
+  		this.hidden = false;
+	};
+  
+  	$("#ShowMenu").click(function(){
+	
+		if( !menu.hidden )
+		{
+			$(".HTML_LINK").hide();
+			menu.hidden = true;
+		}
+		else
+		{
+			$(".HTML_LINK").show();
+			menu.hidden = false;
+		}
+			
+  	});	
+}    */
 
 </script>
 

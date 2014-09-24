@@ -4,9 +4,9 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
     var showWeek = _showWeek;  
     var sundayFirst = _sundayFirst;
     
-    if (date==null) {date = new Date();}
-    if (showWeek==null) {showWeek = false;}
-    if ( sundayFirst == null) {sundayFirst = false;}       
+    if (this.date==null) {this.date = new Date();}
+    if (this.showWeek==null) {this.showWeek = false;}
+    if ( this.sundayFirst == null) {this.sundayFirst = false;}       
     
     function STYLES(styles_T) {
 	this.unique_id= "calendar";
@@ -18,7 +18,7 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
 	this.thd= "thd_class";
 	this.button= "button_style";
 	this.extraButtonData= " ";
-	this.button_content = { back_month: "<<", back_day: "<", forward_month:">", forward_day:">>"};
+	this.button_content = { back_month: "<<", back_day: "<", forward_month:">>", forward_day:">"};
 	this.dayTitle = "day_title_class",
 	this.tbody= "tbody_class";
 	this.tr= "tr_class";
@@ -78,14 +78,14 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
     function buildTableHeader(month, year, b_showWeek, sundayFirst, styles){
         var S = "<thead class=\""+ styles.thead +"\">"+
                 "<tr class=\""+ styles.thr+"\">"+
-                    "<td id = \"title_date\" class=\"title " + styles.thd + "\" colspan=\""+(b_showWeek ? 8:7)+"\"><h1 class=\""+styles.title+"\">"+monthsShort[month]+" "+year+"</h1></td>"+
+                    "<td class=\"title " + styles.thd + "\" colspan=\""+(b_showWeek ? 8:7)+"\"><h1 id = \"title_date\" class=\""+styles.title+"\">"+monthsShort[month]+" "+year+"</h1></td>"+
                 " </tr>"+
                 "<tr class=\""+ styles.thr+"\">"+
-                    "<td class=\"" +styles.button+ " " + styles.thd + "\">"+styles.button_content.back_month+"</td>"+
-                    "<td class=\"" +styles.button+ " " + styles.thd + "\">"+styles.button_content.back_month+"</td>"+
-                    "<td class=\"" +styles.button+ " " + styles.thd + " " + styles.dayTitle + "\" colspan=\""+(b_showWeek ? 4:3)+"\">"+days[date.getDay()]+" "+date.getDate()+"</td>"+
-                    "<td class=\"" +styles.button+ " " + styles.thd + "\">"+styles.button_content.forward_day+"</td>"+
-                    "<td class=\"" +styles.button+ " " + styles.thd + "\">"+styles.button_content.forward_month+"</td>"+
+                    "<td id=\"back_month\" class=\"" +styles.button+ " " + styles.thd + "\">"+styles.button_content.back_month+"</td>"+
+                    "<td id=\"back_day\" class=\"" +styles.button+ " " + styles.thd + "\">"+styles.button_content.back_day+"</td>"+
+                    "<td id=\"day_title\" class=\"" +styles.button+ " " + styles.thd + " " + styles.dayTitle + "\" colspan=\""+(b_showWeek ? 4:3)+"\">"+days[date.getDay()]+" "+date.getDate()+" "+months[date.getMonth()]+"</td>"+
+                    "<td id=\"forward_day\" class=\"" +styles.button+ " " + styles.thd + "\">"+styles.button_content.forward_day+"</td>"+
+                    "<td id=\"forward_month\" class=\"" +styles.button+ " " + styles.thd + "\">"+styles.button_content.forward_month+"</td>"+
                 "</tr>";
             S += "<tr class=\""+ styles.thr+"\">";
         
@@ -214,6 +214,8 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
 	}
 	var setEventsLoopCount = daysInMonth[date.getMonth()];
     
+	setEventsLoopCount = (setEventsLoopCount < events.length? setEventsLoopCount:events.length);
+    
 	var myNumber = 128;
 	for( var i = 1; i < setEventsLoopCount+1; i++){
 	    var str = styles.unique_id +"_"+i.toString(10)+"_"+date.getMonth();
@@ -229,16 +231,40 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
     this.getDayOfTheMonth = function(){return date.getDate();}
     this.getMonth = function(){return date.getMonth();}
     this.getMonthStr = function(){return months[date.getMonth()];}
-    this.getYear = function(){return date.getYear();}
+    this.getYear = function(){return date.getYear() +1900;}
+    
+    
+    this.setDate = function(d){
+	if (d==null) {
+	    return null;
+	}
+	date = null;
+	date = d;
+	return d;
+    }
     
     this.getDateFromID = function(id){
 	var new_array = id.split("_");
 
 	var month = new_array[2]
 	var this_year = this.getYear();
-	this_year += 1900;
+
 	
 	return new Date(this_year, month, new_array[1]);
+    }
+    
+    this.setTitleDateByID = function(id){
+	var dateFromID = this.getDateFromID(id);
+	var selected_day = dateFromID.getDay();
+	if ( !sundayFirst ) {
+	    if(selected_day == 0) {
+		selected_day = 6;
+	    }
+	    else selected_day -= 1;
+	}
+	document.getElementById("day_title").innerHTML = days[selected_day] + " " + dateFromID.getDate() + " " + months[dateFromID.getMonth()];
+	
+
     }
     
     return this;
