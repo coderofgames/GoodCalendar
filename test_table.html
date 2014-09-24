@@ -8,16 +8,12 @@
 		<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>-->
                 <script type="text/javascript" src="jquery-1.11.0.min.js"></script>  
 		
-		<script type="text/javascript" src="jquery.zoomooz.min.js"></script>
+		<script type="text/javascript" src="jquery.zoomooz.js"></script>
                 <script type = "text/javascript" src = "GoodCalendar.js"></script>
 <style>
-    .calendar
-    {
-        width:100px;
-        height:100px;
-    }
 
-    
+
+
     .cal_table
     {
         border:3px solid black;
@@ -36,6 +32,13 @@
     {
                 width:100%;
         height:900px;        
+    }
+    
+    .c2
+    {
+        width:100%;
+        height:100%;
+      
     }
     
     .table_class
@@ -79,7 +82,7 @@
     {
         height: inherit;
         width: auto;
-        margin:1px;     
+        margin:2px;     
         /*border:2px solid blue;*/
     }
     
@@ -110,6 +113,25 @@
     }
     
     
+   
+    .item
+    {
+        float:right;
+        background-color: blue;
+        width: 1em;
+        height: 1em;
+    }
+    
+
+    .item2
+    {
+        float:right;
+        background-color: green;
+        width: 1em;
+        height: 1em;
+    }    
+    
+    
  
                                                            /* { table: "table_class",
                                                            thead: "thead_class",
@@ -127,67 +149,64 @@
 <body>
 
 
-<div id="demo" class="c1 zoomViewport"></div>
-<div id="demo2" class="c1 zoomViewport"></div>
+<!--<div id="demo" class="c1 zoomViewport"></div>-->
+<div id="demo2" class="c2 zoomViewport"></div>
 <div id="demo3"></div>
+
+
 
 <script>
  
-
-    document.getElementById("demo").innerHTML = new Calendar(new Date(2012, 1, 15),//new Date();
-                                                           false,false,
-                                                           { unique_id: "t1",
-                                                             title:"title_style",
-                                                            table: "table_class cal_table zoomContainer",
-                                                           thead: "thead_class",
-                                                           th: "th_class",
-                                                           thr: "thr_class",
-                                                           thd: "thd_class",
-                                                           button: "button_style",
-                                                           extraButtonData: " ",
-                                                           tbody: "tbody_class",
-                                                           tr: "tr_class",
-                                                           td: "td_class",
-                                                           calDiv: "calDiv_class zoomTarget",
-                                                           extraDayData: "data-targetsize=\"0.97\" data-scalemode=\"both\" data-closeclick=\"true\""}).Create();//daysShort.valueOf();
-    
     var d = new Date();
     
-    var myCal =                                       new Calendar(d,
-                                                            false,true,
-                                                            { unique_id: "t2",
-                                                              title:"title_style",
-                                                              table: "table_class cal_table zoomContainer",
-                                                              thead: "thead_class",
-                                                              th: "th_class",
-                                                              thr: "thr_class",
-                                                              thd: "thd_class",
-                                                              button: "button_style",
-                                                              extraButtonData: " ",
-                                                              dayTitle: "day_title_class",
-                                                              tbody: "tbody_class",
-                                                              tr: "tr_class",
-                                                              td: "td_class",
-                                                              calDiv: "calDiv_class zoomTarget",
-                                                              extraDayData: "data-targetsize=\"0.97\" data-scalemode=\"width\" data-closeclick=\"true\""});
-                                                         //daysShort.valueOf();
-     
-     document.getElementById("demo2").innerHTML = myCal.Create();
-    
-
-    //document.getElementById("title_date").innerHTML = d.getMonth() + " " + d.getFullYear();
+    var myCal = new Calendar(d,
+                        false,true,
+                      { unique_id: "t2",
+                        title:"title_style",
+                        table: "table_class cal_table zoomContainer",
+                        thead: "thead_class",
+                        th: "th_class",
+                        thr: "thr_class",
+                        thd: "thd_class",
+                        button: "button_style",
+                        extraButtonData: " ",
+                        dayTitle: "day_title_class",
+                        tbody: "tbody_class",
+                        tr: "tr_class",
+                        td: "td_class",
+                        calDiv: "calDiv_class zoomTarget",
+                        extraDayData: "data-targetsize=\"1.0\" data-scalemode=\"width\" data-closeclick=\"true\""});
+                                                         
+    document.getElementById("demo2").innerHTML = myCal.Create();
     
     var events = [1,0,0,4,5,9,9,0,0,3,2,0,0,1,1,4,5,4,,0,0,0,0,6,0,0,7,8,0,1,1,1,0,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,2,2,2,2,1,1,1,1,0];
 
     myCal.setIndividualDayStyles(events, function(id){
-		document.getElementById(id).style.backgroundColor = "red";
+		//document.getElementById(id).style.backgroundColor = "red";
+                
+                var this_elem = document.getElementById(id);
+                
+                // insert some nodes
+                var newnode = document.createElement("div");
+                newnode.classList.add("item");
+                newnode.classList.add("zoomTarget");
+                newnode.setAttribute("data-closeclick", "true");
+                
+                this_elem.appendChild(newnode);
+                
+                var newnode2 = document.createElement("div");
+                newnode2.classList.add("item2");
+                newnode2.setAttribute("data-closeclick", "true");
+                newnode2.classList.add("zoomTarget");
+                
+                this_elem.appendChild(newnode2);               
     });
-    document.getElementById("t1_23_1").style.backgroundColor = "red"; //tableid_dayInMonth_monthIndex, so for the first table, t1_23_1 for 23rd feb
+
+    var todayElemt2 = "t2_" + myCal.getDayOfTheMonth() +"_"+myCal.getMonth();
     
-    //document.getElementById("calendar").innerHTML = "<table>"
-    var todayElemt2 = "t2_" + myCal.getDay() +"_"+myCal.getMonth();
-           var selectedID = todayElemt2;
-        var saved_color = "white";
+    
+    var selectedID = todayElemt2;    
+    var saved_color = "white";
         
     
     
@@ -196,9 +215,13 @@
         saved_color = document.getElementById(todayElemt2).style.backgroundColor;
         document.getElementById(todayElemt2).style.backgroundColor = "#cccccc";
 
+        
+        /*$(".item2").click(function(evt) {
+            $(this).zoomTo({targetsize:"0.95", scalemode:"both", closeclick:"true"});
+            evt.stopPropagation();
+        });*/
+    
         $(".calDiv_class").click(function(){
-
-
 
             var thisBackground = $(this).css("background-color");
             
@@ -213,15 +236,9 @@
                 $(this).css("background-color","#cccccc");
             }
 
-            
-
-            
             selectedID = this.id;
-             
-            var number = this.id.split("_")[1];
-           
 
-            $("#demo3").html(number);
+            $("#demo3").html(myCal.getDateFromID(selectedID).toString());
         
        });
     });

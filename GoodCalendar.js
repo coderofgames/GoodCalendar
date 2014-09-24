@@ -35,25 +35,23 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
     
     var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
      
-     var daysShort = [];//["Sun","Mon","Tue","Wed","Thur","Fri","Sat"];
-     
-     var daysShortMondayFirst = [];//["Sun","Mon","Tue","Wed","Thur","Fri","Sat"];
-     
-     for( day in days){
-	 daysShort[day] = days[day].substring(0,3);
-	 if ( day == 0) daysShortMondayFirst[days.length-1] = days[day].substring(0,3);
-	 else daysShortMondayFirst[day-1] = days[day].substring(0,3);
-     }
-     
-     var months = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-     var monthsShort = [];
-     
-     
-     for( var i = 0; i < months.length; i++)
-     {
-	 monthsShort[i] = months[i].substring(0,3);
-
-     }
+    var daysShort = [];//["Sun","Mon","Tue","Wed","Thur","Fri","Sat"];
+    
+    var daysShortMondayFirst = [];//["Sun","Mon","Tue","Wed","Thur","Fri","Sat"];
+    
+    for( day in days){
+	daysShort[day] = days[day].substring(0,3);
+	if ( day == 0) daysShortMondayFirst[days.length-1] = days[day].substring(0,3);
+	else daysShortMondayFirst[day-1] = days[day].substring(0,3);
+    }
+    
+    var months = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var monthsShort = [];
+    
+    for( var i = 0; i < months.length; i++)
+    {
+	monthsShort[i] = months[i].substring(0,3);
+    }
      
     var daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
  
@@ -192,9 +190,9 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
                         }    
                     }
                     if ( j==0 && showWeek ) {S+= "<td class=\"week " + styles.td +"\">"+i+"</td>"; }
-                    else if ( j == comp1 ) {S+= "<td class=\"weekend " + styles.td +"\"><div class=\""+styles.calDiv+"\" id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"_"+month+"\" "+styles.extraDayData+">" + dayCount + "</div></td>";}
-                    else if ( j == comp2 ) {S+= "<td class=\"weekend "+ styles.td +"\"><div class=\""+styles.calDiv+"\"  id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"_"+month+"\" "+styles.extraDayData+">" + dayCount + "</div></td>";}
-		    else {S+= "<td class=\"" + styles.td +"\"><div class=\""+styles.calDiv+"\" id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"_"+month+ "\" "+styles.extraDayData+">" + dayCount + "</div></td>";}
+                    else if ( j == comp1 ) {S+= "<td class=\"weekend " + styles.td +"\"><div class=\""+styles.calDiv+"\" id=\""+styles.unique_id+"_"+(beginningOfNextMonthReset?"r":"")+dayCount+"_"+(beginningOfNextMonthReset?(month==11?0:month+1):(!setFirstDay?(month==0?11:month-1):month))+"\" "+styles.extraDayData+">" + dayCount + "</div></td>";}
+                    else if ( j == comp2 ) {S+= "<td class=\"weekend "+ styles.td +"\"><div class=\""+styles.calDiv+"\"  id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"_"+(beginningOfNextMonthReset?(month==11?0:month+1):(!setFirstDay?(month==0?11:month-1):month))+"\" "+styles.extraDayData+">" + dayCount + "</div></td>";}
+		    else {S+= "<td class=\"" + styles.td +"\"><div class=\""+styles.calDiv+"\" id=\""+styles.unique_id+(beginningOfNextMonthReset?"r":"")+"_"+dayCount+"_"+(beginningOfNextMonthReset?(month==11?0:month+1):(!setFirstDay?(month==0?11:month-1):month))+ "\" "+styles.extraDayData+">" + dayCount + "</div></td>";}
                 }
                 S+= "</tr>";
             }
@@ -233,7 +231,15 @@ var Calendar = function(_date, _showWeek, _sundayFirst, _styles){
     this.getMonthStr = function(){return months[date.getMonth()];}
     this.getYear = function(){return date.getYear();}
     
-    
+    this.getDateFromID = function(id){
+	var new_array = id.split("_");
+
+	var month = new_array[2]
+	var this_year = this.getYear();
+	this_year += 1900;
+	
+	return new Date(this_year, month, new_array[1]);
+    }
     
     return this;
 };
